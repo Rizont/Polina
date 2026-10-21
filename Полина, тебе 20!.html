@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Полина, с днем рождения!</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Manrope:wght@400;600&display=swap">
+<style>
+:root{--bg:#fdf1f1;--bg2:#f8dfe4;--ink:#3a2335;--soft:#7a5a72;--glow:#e0577a;--gold:#c98a2b;--card:#ffffff;--line:#ecc9d2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241628;--bg2:#331d38;--ink:#fbeaf0;--soft:#d3a9c2;--glow:#ff7fa0;--gold:#f2b653;--card:#3a2340;--line:#5a3a60}}
+:root[data-theme="dark"]{--bg:#241628;--bg2:#331d38;--ink:#fbeaf0;--soft:#d3a9c2;--glow:#ff7fa0;--gold:#f2b653;--card:#3a2340;--line:#5a3a60}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;margin:0}
+section{max-width:720px;margin:0 auto;padding:72px 22px}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 50% 35%,var(--bg2),var(--bg) 70%);max-width:none}
+.big{font-size:clamp(120px,36vw,230px);line-height:.9;color:var(--glow);text-shadow:0 0 50px color-mix(in srgb,var(--glow) 45%,transparent);animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{text-shadow:0 0 90px color-mix(in srgb,var(--glow) 70%,transparent)}}
+h1{font-size:clamp(34px,8vw,56px);margin-top:8px}
+.sub{color:var(--soft);max-width:30ch;margin:14px auto 0}
+h2{font-size:clamp(28px,6vw,40px);text-align:center}
+.lead{text-align:center;color:var(--soft);margin:8px auto 28px;max-width:38ch}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;max-width:420px;margin:0 auto}
+.grid button{aspect-ratio:1;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--soft);font:600 15px Manrope,sans-serif;cursor:pointer;transition:all .3s}
+.grid button.on{background:var(--gold);border-color:var(--gold);color:#2a1a22;box-shadow:0 0 22px color-mix(in srgb,var(--gold) 70%,transparent)}
+.grid button:focus-visible,.env:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+#wish{min-height:112px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(24px,5.5vw,32px);margin:30px auto 0;max-width:24ch;line-height:1.25}
+#cnt{text-align:center;color:var(--soft);font-size:14px;margin-top:8px}
+.polas{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
+.pola{width:200px;background:var(--card);padding:12px 12px 16px;border-radius:4px;box-shadow:0 10px 30px rgba(60,20,50,.18);transform:rotate(var(--r))}
+.pola .ph{height:170px;border-radius:2px;background:linear-gradient(135deg,var(--bg2),var(--line));display:flex;align-items:center;justify-content:center;font-size:54px}
+.pola p{margin:12px 0 0;text-align:center;font-family:"Cormorant Garamond",Georgia,serif;font-size:20px;font-weight:500;font-style:italic}
+.gift{text-align:center}
+.env{display:inline-block;margin-top:10px;border:0;background:none;cursor:pointer;font-size:96px;transition:transform .3s}
+.env:hover{transform:scale(1.08) rotate(-4deg)}
+#letter{max-height:0;opacity:0;overflow:hidden;transition:max-height 1.2s ease,opacity 1s ease;text-align:left}
+#letter.open{max-height:1400px;opacity:1}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:30px 26px;margin-top:20px;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(20px,4.6vw,24px);line-height:1.5}
+.paper p{margin:0 0 14px}
+.sign{text-align:right;color:var(--glow);font-style:italic}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion:reduce){.big{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<section class="hero">
+  <div class="big serif">20</div>
+  <h1>Полина, с днём рождения!</h1>
+  <p class="sub">22 октября. Этот сайт сделан только для тебя) Прокрути вниз.</p>
+</section>
+
+<section>
+  <h2>20 огоньков для тебя</h2>
+  <p class="lead">По одному на каждый год. Нажимай и зажигай, в каждом спрятано пожелание.</p>
+  <div class="grid" id="grid"></div>
+  <div id="wish" class="serif" aria-live="polite">Выбери любой огонёк</div>
+  <div id="cnt"></div>
+</section>
+
+<section>
+  <h2>Наши моменты</h2>
+  <p class="lead">Фоток нету поэтому придется наслаждаться красивыми эмоджи которые я нашел).</p>
+  <div class="polas">
+    <div class="pola" style="--r:-4deg"><div class="ph">🌷</div><p>Смех без причины</p></div>
+    <div class="pola" style="--r:3deg"><div class="ph"><img src="photo_2024-07-12_22-25-13.jpg" width="200" alt=""></div><p>Разговоры до ночи</p></div>
+    <div class="pola" style="--r:-2deg"><div class="ph">✨</div><p>Всё ещё впереди</p></div>
+  </div>
+</section>
+
+<section class="gift">
+  <h2>И ещё одно</h2>
+  <p class="lead">Подарок спрятан в конверте. Нажми на него.</p>
+  <button class="env" id="env" aria-label="Открыть конверт" aria-expanded="false">💌</button>
+  <div id="letter">
+    <div class="paper">
+      <p>Полина, тебе двадцать. Это очень красивый возраст: уже достаточно смелости, чтобы пробовать, и ещё достаточно времени, чтобы ошибаться и всё равно идти дальше.</p>
+      <p>Я желаю тебе людей, рядом с которыми легко дышать. Дел, от которых горят глаза. Дней, когда ты просыпаешься и точно знаешь, что всё идёт как надо. А в трудные дни пусть рядом будет кто-то с чаем и тёплым пледом.</p>
+      <p>Спасибо, что ты есть, без твоей помощи в вузе сложно. Правда. С днём рождения!</p>
+      <p>P.S. Я делал этот сайт на своей ноуте и не могу знать как сильно его скорежит с телефона, так что заранее извини</p>
+      <p class="sign">Твоя друг, Леша</p>
+    </div>
+  </div>
+</section>
+
+<script>
+var wishes=["Пусть сбываются даже те мечты, о которых ты боишься вслух говорить.","Желаю тебе спокойного сердца и ясной головы.","Пусть рядом всегда будут люди, которые за тебя горой.","Больше смеха до слёз и поменьше поводов для слёз.","Пусть учёба и работа приносят радость, а не только усталость.","Желаю тебе верить в себя даже тогда, когда сомневаешься.","Пусть каждое утро начинается с чего-то приятного.","Желаю лёгких дорог и интересных путешествий.","Пусть у тебя всегда будет место, куда хочется вернуться.","Желаю смелости начинать новое.","Пусть здоровье будет крепким, а сон глубоким.","Желаю находить красоту в мелочах.","Пусть тебя ценят так, как ты этого заслуживаешь.","Желаю времени на то, что тебе действительно нравится.","Пусть любовь в твоей жизни будет настоящей и тёплой.","Желаю, чтобы удача сама стучалась в твою дверь.","Пусть тебя вдохновляют и люди, и книги, и музыка.","Желаю не терять свою искорку, что бы ни происходило.","Пусть этот год будет лучшим из всех, что были.","Ты прекрасна, и я так рада, что ты есть в моей жизни."];
+var g=document.getElementById('grid'),w=document.getElementById('wish'),cn=document.getElementById('cnt'),lit=0;
+wishes.forEach(function(t,i){var b=document.createElement('button');b.textContent=i+1;b.setAttribute('aria-label','Огонёк '+(i+1));
+b.onclick=function(){if(!b.classList.contains('on')){b.classList.add('on');lit++;}w.textContent=t;cn.textContent='Зажжено: '+lit+' из 20';if(lit===20){burst();cn.textContent='Все 20 огоньков горят!';}};g.appendChild(b);});
+var cv=document.getElementById('c'),cx=cv.getContext('2d'),P=[],run=false;
+function fit(){cv.width=innerWidth;cv.height=innerHeight;}fit();addEventListener('resize',fit);
+function burst(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;var cols=['#ff7fa0','#f2b653','#ffd1dc','#b69cff','#7fd8c4'];
+for(var i=0;i<140;i++)P.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,s:Math.random()*7+4,c:cols[i%5],r:Math.random()*6});
+if(!run){run=true;tick();}}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);P.forEach(function(p){p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.r+=.2;cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore();});
+P=P.filter(function(p){return p.y<cv.height+20;});if(P.length)requestAnimationFrame(tick);else run=false;}
+var env=document.getElementById('env'),L=document.getElementById('letter');
+env.onclick=function(){var o=L.classList.toggle('open');env.setAttribute('aria-expanded',o);env.textContent=o?'💖':'💌';if(o){burst();setTimeout(function(){L.scrollIntoView({behavior:'smooth',block:'center'});},300);}};
+</script>
+</body>
+</html>
